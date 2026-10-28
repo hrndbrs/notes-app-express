@@ -8,17 +8,31 @@ const compat = new FlatCompat({
 });
 
 module.exports = [
+  {
+    ignores: ['coverage/**']
+  },
   js.configs.recommended,
   ...compat.config({
-    env: { 
-      es2021: true, 
-      node: true, 
-      jest: true 
+    env: {
+      es2021: true,
+      node: true,
+      jest: true
     },
     rules: {
       "no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
       "no-console": "off",
       "eqeqeq": ["error", "always"]
     }
-  })
+  }),
+  {
+    files: ['loadtest/**/*.js'],
+    languageOptions: {
+      sourceType: 'module',
+      globals: {
+        __ENV: 'readonly',
+        __VU: 'readonly',
+        __ITER: 'readonly'
+      }
+    }
+  }
 ];
